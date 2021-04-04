@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Converter</title>
+    <style>
+        .card{
+            width: 250px;
+            height: 240px;
+            margin: auto;
+            margin-top:50px;
+            border-style:solid;
+            border-color: #707070;
+            border-width: 0.5px;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: sans-serif;
+            text-align: center;
+        }
+        .fromlable{
+            float: left;
+        }
+        .intolable{
+            float: right;
+            margin-right: 90px;
+        }
+        .from{
+            width: 118px;
+            float: left;
+            height: 40px;
+            border-radius: 5px;
+            border-width: 0.5px;
+            font-size: 25px;
+           padding-left: 30px;
+        }
+        .into{
+            width: 118px;
+            float: right;
+            height: 40px;
+            border-radius: 5px;
+            border-width: 0.5px;
+            font-size: 25px;
+            padding-left: 30px;
+        }
+        .optionpad{
+            clear: both;
+            text-align: left;
+        }
+        .inputnumberlabel{
+            text-align: left !important;
+        }
+        .inputnumber{
+            width: 240px;
+            height: 40px;
+            border-radius: 5px;
+            border-width: 0.5px;
+            font-size: 25px;
+            padding-left: 5px;
+            margin-top: -10px;
+            pointer-events:fill;
+        }
+        .convertbutton{
+            width: 250px;
+            padding: 10px;
+            border-radius: 5px;
+            border-width: 1px;
+            background-color: #45A3FF;
+            color: white;
+            font-size: 15px;
+            border-color: #828282;
+            margin-top: 20px;
+            display: block;
+        }
+        .resetbutton{
+            width: 250px;
+            padding: 10px;
+            border-radius: 5px;
+            border-width: 1px;
+            background-color: #FA82AA;
+            color: black;
+            font-size: 15px;
+            border-color: #828282;
+            margin-top: 20px;
+            display: none;
+        }
+        .result{
+            font-weight: bold;
+            font-size: 30px;
+            margin-top: -10px;
+        }
+        .resultpad{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="card" id="card">
+       
+       <label for="from" class="fromlable">from</label><label for="into" class="intolable">into</label><br>
+       <select name="from" id="from" class="from">
+           <option value="km" class="optionpad">km</option>
+           <option value="hm" class="optionpad">hm</option>
+           <option value="dam" class="optionpad">dam</option>
+           <option value="m"  class="optionpad">m</option>
+           <option value="dm" class="optionpad">dm</option>
+           <option value="cm" class="optionpad">cm</option>
+           <option value="mm" class="optionpad">mm</option>
+       </select>
+       
+       <select name="into" id="into" class="into">
+          <option value="km" class="optionpad">km</option>
+          <option value="hm" class="optionpad">hm</option>
+          <option value="dam" class="optionpad">dam</option>
+          <option value="m" class="optionpad">m</option>
+          <option value="dm" class="optionpad">dm</option>
+          <option value="cm" class="optionpad">cm</option>
+          <option value="mm" class="optionpad">mm</option>
+       </select>
+       <br><br> <br>
+       <p class="inputnumberlabel">type your number here...</p>
+       <input type="number" id="inputnumber" class="inputnumber" >
+       <p id="resultpad" class="resultpad">The Result is :</p>
+       <p id="result" class="result"></p>
+       <button class="convertbutton" id="convertbutton" onclick="convert()">CONVERT</button>
+       <button class="resetbutton" id="resetbutton" onclick="reset()">RESET</button>
+    </div>
+
+    <script>
+        function convert()
+        {
+            var frominput = document.getElementById("from").selectedIndex;
+            var from = document.getElementsByTagName("option")[frominput].value;
+            var intoinput = document.getElementById("into").selectedIndex;
+            var into = document.getElementsByTagName("option")[intoinput].value;
+            var userinput=document.getElementById("inputnumber").value;
+
+            switch (from) {
+                case "km":
+                    counting(1000000,userinput,into);
+                    break;
+                case "hm":
+                    counting(100000,userinput,into);
+                    break;    
+                case "dam":
+                    counting(10000,userinput,into);
+                    break;
+                case "m":
+                    counting(1000,userinput,into);
+                    break;
+                case "dm":
+                    counting(100,userinput,into);
+                    break;
+                case "cm":
+                    counting(10,userinput,into);
+                    break;
+                case "mm":
+                    counting(1,userinput,into);
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+
+        function counting(from,userinput,into){
+            var from=from;
+            var userinput=userinput;
+            var into=into;
+            var result=0;
+            switch (into) {
+                case "km":
+                    result=from/1000000*userinput;
+                    break;
+                case "hm":
+                    result=from/100000*userinput;
+                    break;    
+                case "dam":
+                    result=from/10000*userinput;
+                    break;
+                case "m":
+                    result=from/1000*userinput;
+                    break;
+                case "dm":
+                    result=from/100*userinput;
+                    break;
+                case "cm":
+                    result=from/10*userinput;
+                    break;
+                case "mm":
+                    result=from/1*userinput;
+                    break;
+                default:
+                    break;
+            }
+            
+            document.getElementById("result").innerHTML=result+" "+into;
+            document.getElementById("card").style.height="300px";
+            document.getElementById("convertbutton").style.display="none";
+            document.getElementById("resetbutton").style.display="block";
+            document.getElementById("resultpad").style.display="block";
+            document.getElementById("inputnumber").style.pointerEvents="none";
+        }
+
+        function reset(){
+            document.getElementById("inputnumber").value=null;
+            document.getElementById("resetbutton").style.display="none";
+            document.getElementById("convertbutton").style.display="block";
+            document.getElementById("card").style.height="240px";
+            document.getElementById("result").innerHTML="";
+            document.getElementById("resultpad").style.display="none";
+            document.getElementById("inputnumber").style.pointerEvents="fill";
+        }
+
+    </script>
+</body>
+</html>
